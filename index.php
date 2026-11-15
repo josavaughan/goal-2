@@ -10,8 +10,7 @@ if (!is_installed()) {
 }
 
 $goals = load_goals(true);
-$complete = count(array_filter($goals, fn($g) => $g['status'] === 'complete'));
-$hasPace = count(array_filter($goals, fn($g) => $g['expected'] !== null)) > 0;
+$complete = count(array_filter($goals, fn($g) => $g['pct'] >= 100));
 
 render_header($CONFIG['site_title']);
 ?>
@@ -32,7 +31,7 @@ render_header($CONFIG['site_title']);
 <div class="stats">
   <div class="stat"><span class="stat-num"><?= count($goals) ?></span><span class="stat-label">Goals</span></div>
   <div class="stat"><span class="stat-num"><?= $complete ?></span><span class="stat-label">Complete</span></div>
-  <div class="stat"><span class="stat-num"><?= count($goals) - $complete ?></span><span class="stat-label">In progress</span></div>
+  <div class="stat"><span class="stat-num"><?= count($goals) - $complete ?></span><span class="stat-label">Underway</span></div>
 </div>
 
 <section class="card chart-card" aria-labelledby="chart-title">
@@ -47,14 +46,10 @@ render_header($CONFIG['site_title']);
           <span class="bar-sub"><?= e($label) ?><?php if ($g['deadline']): ?> · due <?= e(nice_date($g['deadline'])) ?><?php endif; ?></span>
         </div>
         <div class="bar-track" title="<?= e($g['title'] . ': ' . round($g['pct']) . '% — ' . $label) ?>">
-          <div class="bar-fill status-<?= e($g['status']) ?>" style="width: <?= e(round($g['pct_bar'], 2)) ?>%"></div>
-          <?php if ($g['expected'] !== null): ?>
-            <div class="bar-pace" style="left: <?= e(round($g['expected'], 2)) ?>%" title="Where you'd be at an even pace: <?= e(round($g['expected'])) ?>%"></div>
-          <?php endif; ?>
+          <div class="bar-fill" style="width: <?= e(round($g['pct_bar'], 2)) ?>%"></div>
         </div>
         <div class="bar-value">
           <strong><?= e(round($g['pct'])) ?>%</strong>
-          <?= status_badge($g['status']) ?>
         </div>
       </div>
     <?php endforeach; ?>
@@ -64,9 +59,6 @@ render_header($CONFIG['site_title']);
       <span></span>
     </div>
   </div>
-  <?php if ($hasPace): ?>
-    <p class="note"><span class="pace-key" aria-hidden="true"></span> The thin vertical mark shows where an even pace from start date to deadline would put you today.</p>
-  <?php endif; ?>
 </section>
 
 <section class="card" aria-labelledby="table-title">
@@ -74,7 +66,7 @@ render_header($CONFIG['site_title']);
   <div class="table-scroll">
     <table class="data">
       <thead>
-        <tr><th scope="col">Goal</th><th scope="col" class="num">Progress</th><th scope="col" class="num">Percent</th><th scope="col">Status</th><th scope="col">Deadline</th></tr>
+        <tr><th scope="col">Goal</th><th scope="col" class="num">Progress</th><th scope="col" class="num">Percent</th><th scope="col">Started</th><th scope="col">Deadline</th></tr>
       </thead>
       <tbody>
       <?php foreach ($goals as $g): ?>
@@ -85,7 +77,7 @@ render_header($CONFIG['site_title']);
           </th>
           <td class="num"><?= e(num($g['done'])) ?> / <?= e(num($g['target'])) ?> <?= e($g['unit']) ?></td>
           <td class="num"><?= e(round($g['pct'])) ?>%</td>
-          <td><?= status_badge($g['status']) ?></td>
+          <td><?= $g['start_date'] ? e(nice_date($g['start_date'])) : '<span class="muted">—</span>' ?></td>
           <td><?= $g['deadline'] ? e(nice_date($g['deadline'])) : '<span class="muted">—</span>' ?></td>
         </tr>
       <?php endforeach; ?>

@@ -131,7 +131,6 @@ render_header($goal ? 'Edit goal' : 'New goal', true);
         <input type="date" name="deadline" value="<?= e($form['deadline']) ?>">
       </label>
     </div>
-    <p class="muted small">With both dates set, the chart shows whether you are on pace.</p>
 
     <div class="row-2">
       <label>Display order <span class="muted">(lower shows first)</span>

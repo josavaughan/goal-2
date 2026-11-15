@@ -11,8 +11,8 @@ A small, self-hosted web app for tracking progress toward professional developme
   - a progress log for each goal: add, edit and delete entries (date, description, units)
   - CSV export of the whole log (for backups and CEU/PDU renewal paperwork)
   - change your password
-- **Pace tracking** — when a goal has both a start date and a deadline, the chart marks where
-  an even pace would put you today and labels the goal *On pace* or *Behind pace*.
+- **No judgments** — the app reports only facts: units logged, percent of target, start date
+  and deadline. It never labels a goal as ahead, behind, late or on track.
 - **Readable** — large type, high contrast, a light/dark switch and an **A+** larger-text
   switch (both remembered per browser), keyboard-friendly, works at phone width.
 
@@ -80,15 +80,6 @@ over `https://` so your password is encrypted in transit.
 **Percent complete** = sum of logged units ÷ target × 100. The bar stops at 100%, but the number shows
 any overage (e.g. 110%).
 
-**Status labels:**
-
-| Label | Meaning |
-|---|---|
-| ✓ Complete | Logged units have reached the target |
-| ▲ On pace | At or ahead of an even pace from start date to deadline |
-| ! Behind pace | Below that even pace |
-| ✕ Past deadline | Deadline has passed and the goal isn't complete |
-| ● In progress | No start date/deadline set, so pace can't be judged |
 
 ---
 

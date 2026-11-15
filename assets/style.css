@@ -14,12 +14,7 @@
   --danger: #b42828;
   --focus: #1f5fae;
 
-  /* status colors - always paired with an icon + label */
-  --st-complete: #0ca30c;
-  --st-ontrack: #2a78d6;
-  --st-active: #2a78d6;
-  --st-behind: #fab219;
-  --st-overdue: #d03b3b;
+  --bar: #2a78d6;
 
   --ok-bg: #e5f4e5;  --ok-ink: #0d4d0d;
   --err-bg: #fbe7e7; --err-ink: #7d1616;
@@ -44,8 +39,7 @@
     --accent-ink: #0b0b0b;
     --danger: #f07a7a;
     --focus: #8bbcf7;
-    --st-ontrack: #3987e5;
-    --st-active: #3987e5;
+    --bar: #3987e5;
     --ok-bg: #12301a; --ok-ink: #b9ecc0;
     --err-bg: #3a1616; --err-ink: #ffc9c9;
     color-scheme: dark;
@@ -64,8 +58,7 @@
   --accent-ink: #0b0b0b;
   --danger: #f07a7a;
   --focus: #8bbcf7;
-  --st-ontrack: #3987e5;
-  --st-active: #3987e5;
+  --bar: #3987e5;
   --ok-bg: #12301a; --ok-ink: #b9ecc0;
   --err-bg: #3a1616; --err-ink: #ffc9c9;
   color-scheme: dark;
@@ -182,18 +175,8 @@ textarea { resize: vertical; }
                                               transparent calc(50% - 1px), var(--grid) calc(50% - 1px), var(--grid) 50%, transparent 50%,
                                               transparent calc(75% - 1px), var(--grid) calc(75% - 1px), var(--grid) 75%, transparent 75%);
 }
-.bar-fill { height: 100%; border-radius: 0 4px 4px 0; min-width: 2px; }
+.bar-fill { height: 100%; border-radius: 0 4px 4px 0; min-width: 2px; background: var(--bar); }
 .bar-fill[style="width: 0%"] { min-width: 0; }
-.bar-fill.status-complete { border-radius: 4px; }
-.status-complete { background: var(--st-complete); }
-.status-ontrack  { background: var(--st-ontrack); }
-.status-active   { background: var(--st-active); }
-.status-behind   { background: var(--st-behind); }
-.status-overdue  { background: var(--st-overdue); }
-.bar-pace {
-  position: absolute; top: -.3rem; bottom: -.3rem; width: 3px; margin-left: -1.5px;
-  background: var(--text); border-radius: 2px; box-shadow: 0 0 0 2px var(--surface);
-}
 .bar-value { display: flex; align-items: center; gap: .6rem; font-variant-numeric: tabular-nums; }
 .bar-value strong { font-size: 1.25rem; min-width: 3.2rem; text-align: right; }
 .axis-row { margin-top: -.6rem; }
@@ -201,26 +184,14 @@ textarea { resize: vertical; }
 .axis span { position: absolute; transform: translateX(-50%); }
 .axis span:first-child { transform: none; }
 .axis span:last-child { transform: translateX(-100%); }
-.note { color: var(--text-2); font-size: .9rem; margin: .5rem 0 0; display: flex; align-items: center; gap: .6rem; }
-.pace-key { display: inline-block; width: 3px; height: 1.3rem; background: var(--text); border-radius: 2px; flex: none; }
 
 @media (max-width: 760px) {
   .chart { grid-template-columns: minmax(0, 1fr) auto; row-gap: .4rem; }
   .bar-label { grid-column: 1 / -1; }
   .bar-row + .bar-row .bar-label { margin-top: .7rem; }
   .bar-value strong { min-width: 0; }
-  .bar-value .badge { display: none; }
   .axis-row { display: none; }
 }
-
-/* ---------- status badges (icon + label, never color alone) */
-.badge { display: inline-flex; align-items: center; gap: .35rem; font-size: .85rem; font-weight: 700; color: var(--text); white-space: nowrap; }
-.badge-icon { display: inline-grid; place-items: center; width: 1.25rem; height: 1.25rem; border-radius: 50%; font-size: .72rem; line-height: 1; color: #fff; }
-.badge-complete .badge-icon { background: var(--st-complete); }
-.badge-ontrack  .badge-icon { background: var(--st-ontrack); }
-.badge-active   .badge-icon { background: var(--st-active); }
-.badge-behind   .badge-icon { background: var(--st-behind); color: #0b0b0b; }
-.badge-overdue  .badge-icon { background: var(--st-overdue); }
 
 /* ---------- tables */
 .table-scroll { overflow-x: auto; }
@@ -249,7 +220,7 @@ table.data tbody th .small { font-weight: 400; margin-top: .2rem; }
 @media (max-width: 860px) { .log-layout { grid-template-columns: 1fr; } }
 
 @media (forced-colors: active) {
-  .bar-fill, .bar-pace, .badge-icon, .pace-key { forced-color-adjust: none; background: CanvasText; }
+  .bar-fill { forced-color-adjust: none; background: CanvasText; }
   .bar-track { border: 1px solid CanvasText; }
 }
 @media print {

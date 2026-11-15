@@ -90,9 +90,8 @@ render_header('Log: ' . $goal['title'], true);
     <span class="big"><?= e(round($goal['pct'])) ?>%</span>
     <span><strong><?= e(num($goal['done'])) ?></strong> of <?= e(num($goal['target'])) ?> <?= e($goal['unit']) ?>
       <?php if ($remaining > 0): ?>· <?= e(num($remaining)) ?> to go<?php endif; ?></span>
-    <?= status_badge($goal['status']) ?>
   </p>
-  <div class="mini-track" aria-hidden="true"><div class="bar-fill status-<?= e($goal['status']) ?>" style="width: <?= e(round($goal['pct_bar'], 2)) ?>%"></div></div>
+  <div class="mini-track" aria-hidden="true"><div class="bar-fill" style="width: <?= e(round($goal['pct_bar'], 2)) ?>%"></div></div>
 </div>
 
 <div class="log-layout">

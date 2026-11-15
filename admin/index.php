@@ -31,10 +31,9 @@ render_header('Manage goals', true);
         <p class="goal-meta">
           <strong><?= e(num($g['done'])) ?></strong> of <?= e(num($g['target'])) ?> <?= e($g['unit']) ?>
           · <strong><?= e(round($g['pct'])) ?>%</strong>
-          · <?= status_badge($g['status']) ?>
           <?php if ($g['deadline']): ?>· due <?= e(nice_date($g['deadline'])) ?><?php endif; ?>
         </p>
-        <div class="mini-track" aria-hidden="true"><div class="bar-fill status-<?= e($g['status']) ?>" style="width: <?= e(round($g['pct_bar'], 2)) ?>%"></div></div>
+        <div class="mini-track" aria-hidden="true"><div class="bar-fill" style="width: <?= e(round($g['pct_bar'], 2)) ?>%"></div></div>
         <p class="muted small"><?= (int) $g['entry_count'] ?> log entr<?= (int) $g['entry_count'] === 1 ? 'y' : 'ies' ?><?php if ($g['last_entry']): ?>, latest <?= e(nice_date($g['last_entry'])) ?><?php endif; ?></p>
       </div>
       <div class="goal-actions">

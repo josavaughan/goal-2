@@ -12,7 +12,7 @@ return [
     // Optional line shown under the title on the public page. '' to hide.
     'site_subtitle' => 'Progress toward my current certifications, degrees and continuing education.',
 
-    // Your local time zone (used for "today" and pace calculations).
+    // Your local time zone (used for "today" and dates on entries).
     'timezone' => 'America/Denver',
 
     // Database. Choose ONE driver: 'sqlite' (no setup needed) or 'mysql'.

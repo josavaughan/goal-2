@@ -183,7 +183,7 @@ function require_login(): void
 
 // ---------------------------------------------------------------- goals
 /**
- * All goals with their progress totals, percent and pace status.
+ * All goals with their progress totals and percent complete.
  * $publicOnly = true hides goals marked as private.
  */
 function load_goals(bool $publicOnly): array
@@ -206,43 +206,10 @@ function goal_progress(array $g): array
     $target = (float) $g['target'];
     $done = (float) $g['done'];
     $pct = $target > 0 ? max(0, $done / $target * 100) : 0;
-    $expected = null;
-    $today = today();
-
-    if ($pct >= 100) {
-        $status = 'complete';
-    } elseif (!empty($g['deadline']) && $today > $g['deadline']) {
-        $status = 'overdue';
-    } elseif (!empty($g['deadline']) && !empty($g['start_date']) && $g['deadline'] > $g['start_date']) {
-        $span = strtotime($g['deadline']) - strtotime($g['start_date']);
-        $elapsed = strtotime($today) - strtotime($g['start_date']);
-        $expected = max(0, min(100, $elapsed / $span * 100));
-        $status = $pct + 0.0001 >= $expected ? 'ontrack' : 'behind';
-    } else {
-        $status = 'active';
-    }
-
     return [
         'pct' => $pct,
         'pct_bar' => min(100, $pct),
-        'expected' => $expected,
-        'status' => $status,
     ];
-}
-
-const STATUS_INFO = [
-    'complete' => ['label' => 'Complete', 'icon' => '✓'],
-    'ontrack' => ['label' => 'On pace', 'icon' => '▲'],
-    'behind' => ['label' => 'Behind pace', 'icon' => '!'],
-    'overdue' => ['label' => 'Past deadline', 'icon' => '✕'],
-    'active' => ['label' => 'In progress', 'icon' => '●'],
-];
-
-function status_badge(string $status): string
-{
-    $s = STATUS_INFO[$status];
-    return '<span class="badge badge-' . e($status) . '"><span class="badge-icon" aria-hidden="true">'
-        . $s['icon'] . '</span>' . e($s['label']) . '</span>';
 }
 
 /** Date of the most recent change to any goal or log entry. */
